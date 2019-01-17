@@ -4,6 +4,6 @@ void main(){
   runApp(
     new MaterialApp(
       title: 'Desi Weather',
-      home: 'desiweather()',
+      home:new desiweather(),
     )//MaterialApp
    );}
