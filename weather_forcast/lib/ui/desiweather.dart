@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'dart:async';
+import 'dart:convert';
+import '../util/utils.dart' as util;
+import 'package:http/http.dart' as http;
 
-import '../util/utils.dart';
 
 class desiweather extends StatefulWidget {
   @override
@@ -9,6 +12,10 @@ class desiweather extends StatefulWidget {
 }
 
 class _desiweatherState extends State<desiweather> {
+
+  void showStuff() async{
+    getWeather(util.apiId, util.defaultCity);
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +58,54 @@ class _desiweatherState extends State<desiweather> {
 
     );
   }
+  Future<Map> getWeather(String apiId,String city ) async{
+    String apiUrl = 'http://api.openweathermap.org/data/2.5/weather?q=$city&APPID=$apiId';
+    http.Response response = await http.get(apiUrl);
+    return json.decode(response.body);
+
 }
+  Widget updateTempWidget(String city) {
+    return new FutureBuilder(
+        future: getWeather(util.apiId, city == null ? util.defaultCity : city),
+        builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
+          //where we get all of the json data, we setup widgets etc.
+          if (snapshot.hasData) {
+            Map content = snapshot.data;
+            return new Container(
+              margin: const EdgeInsets.fromLTRB(30.0, 250.0, 0.0, 0.0),
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new ListTile(
+                    title: new Text(
+                      content['main']['temp'].toString() +" F",
+                      style: new TextStyle(
+                          fontStyle: FontStyle.normal,
+                          fontSize: 49.9,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    subtitle: new ListTile(
+                      title: new Text(
+                        "Humidity: ${content['main']['humidity'].toString()}\n"
+                            "Min: ${content['main']['temp_min'].toString()} F\n"
+                            "Max: ${content['main']['temp_max'].toString()} F ",
+
+                        style: extraData(),
+
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return new Container();
+          }
+        });
+  }
+}
+
 TextStyle cityStyle(){
 return new TextStyle(
   color: Colors.white,
@@ -69,4 +123,11 @@ TextStyle tempStyle(){
 
 
   );
+}
+TextStyle extraData() {
+  return new TextStyle(
+      color: Colors.white70,
+      fontStyle: FontStyle.normal,
+      fontSize: 17.0);
+
 }
