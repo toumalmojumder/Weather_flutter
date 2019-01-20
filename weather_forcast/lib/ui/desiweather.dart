@@ -11,7 +11,7 @@ class _desiweatherState extends State<desiweather> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text('desiweather'),
+        title: new Text('Desi Weather'),
         centerTitle: true,
         backgroundColor: Colors.red,
         actions: <Widget>[
@@ -19,14 +19,33 @@ class _desiweatherState extends State<desiweather> {
           new IconButton(icon: new Icon(Icons.menu,color: Colors.white,), onPressed: null)
         ],
       ),
-      body: new Center(
-          child: new Image(
-              width: 500.0,
-              height: 1200.0,
-              fit: BoxFit.cover,
-              image: new AssetImage('images/umbrella.png')
+      body:
+      new Stack(
+        children: <Widget>[
+          new Center(
+              child: new Image(
+                  width: 500.0,
+                  height: 1200.0,
+                  fit: BoxFit.cover,
+                  image: new AssetImage('images/umbrella.png')
+              )
+          ),
+          new Container(
+            alignment: Alignment.topRight,
+            margin: EdgeInsets.fromLTRB(0.0, 20, 20, 0.0),
+            child: new Text('Something',style: cityStyle())
           )
+        ],
       ),
+
     );
   }
+}
+TextStyle cityStyle(){
+return new TextStyle(
+  color: Colors.white,
+  fontSize: 22.9,
+  fontStyle: FontStyle.italic
+
+);
 }
