@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../util/utils.dart';
+
 class desiweather extends StatefulWidget {
   @override
   _desiweatherState createState() => _desiweatherState();
@@ -34,7 +36,16 @@ class _desiweatherState extends State<desiweather> {
             alignment: Alignment.topRight,
             margin: EdgeInsets.fromLTRB(0.0, 20, 20, 0.0),
             child: new Text('Something',style: cityStyle())
-          )
+          ),
+          new Container(
+              alignment: Alignment.center,
+              child: new Image.asset('images/light_rain.png')
+          ),
+          new Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.fromLTRB(0.0, 150, 50.0, 0.0),
+              child: new Text('97.5'+'F',style: tempStyle())
+          ),
         ],
       ),
 
@@ -48,4 +59,14 @@ return new TextStyle(
   fontStyle: FontStyle.italic
 
 );
+}
+TextStyle tempStyle(){
+  return new TextStyle(
+      color: Colors.white,
+      fontSize: 49.9,
+      fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w500,
+
+
+  );
 }
